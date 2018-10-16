@@ -112,9 +112,14 @@ class BurgerBuilder extends Component {
 
     writeUserOrder = (order) => {
         fire.database().ref('orders').push(order).then(() => {
-            this.setState({loading: false, purchasing: false});
+            setTimeout(() => {
+                this.setState({loading: false, purchasing: false});
+            }, 1500);
             console.log('Loading:', this.state.loading);
         }).catch(error => {
+            setTimeout(() => {
+                this.setState({loading: false, purchasing: false});
+            }, 1500);
             console.log(error.code, error.message);
             this.setState({error: error});
         });
@@ -124,7 +129,9 @@ class BurgerBuilder extends Component {
         fire.database().ref('ingredients').once('value')
             .then(snapshot => {
                 console.log(snapshot.val());
-                this.setState({ingredients: snapshot.val()});
+                setTimeout(() => {
+                    this.setState({ingredients: snapshot.val()});
+                }, 1500);
             }).catch(error => {
             console.log(error.code, error.message);
             this.setState({error: error});
@@ -145,7 +152,7 @@ class BurgerBuilder extends Component {
 
         let orderSummary = null;
 
-        let burger = <Spinner/>;
+        let burger = this.state.error ? <p>Ingredients can't be loaded</p> : <Spinner/>;
 
         if (this.state.ingredients) {
             burger =
