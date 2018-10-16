@@ -29,7 +29,8 @@ class BurgerBuilder extends Component {
             totalPrice: 4,
             purchasable: false,
             purchasing: false,
-            loading: false
+            loading: false,
+            error: null
         };
 
     }
@@ -114,10 +115,15 @@ class BurgerBuilder extends Component {
             this.setState({loading: false, purchasing: false});
             console.log('Loading:', this.state.loading);
         }).catch((error) => {
-            this.setState({loading: false, purchasing: false});
-            alert('Something went wrong!');
+            // this.setState({loading: false, purchasing: false});
+            // alert('Something went wrong!');
             console.log(error.code, error.message);
+            this.setState({error: error});
         });
+    };
+
+    dismissErrorHandler = () => {
+        this.setState({error: null});
     };
 
     render() {
@@ -141,6 +147,9 @@ class BurgerBuilder extends Component {
 
         return (
             <>
+                <Modal show={this.state.error} modalClosed={this.dismissErrorHandler}>
+                    Something went wrong :(
+                </Modal>
                 <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
                     {orderSummary}
                 </Modal>
