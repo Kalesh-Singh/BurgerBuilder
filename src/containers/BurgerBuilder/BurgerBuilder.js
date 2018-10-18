@@ -87,50 +87,17 @@ class BurgerBuilder extends Component {
     };
 
     purchaseContinueHandler = () => {
-        /*this.setState({loading: true});
-
-        const order = {
-            ingredients: this.state.ingredients,
-            price: this.state.totalPrice,
-            customer: {
-                name: 'Kalesh Singh',
-                address: {
-                    street: 'N Street',
-                    zipCode: '51623',
-                    country: 'Guyana'
-                },
-                email: 'kaleshsingh5162@gmail.com'
-            },
-            deliveryMethod: 'fastest'
-        };
-
-        this.writeUserOrder(order);*/
-
         const queryParams = [];
         for (let i in this.state.ingredients) {
             queryParams.push(encodeURIComponent(i)
                 + '='
                 + encodeURIComponent(this.state.ingredients[i]));
         }
+        queryParams.push('price='+this.state.totalPrice);
         const queryString = queryParams.join('&');
         this.props.history.push({
             pathname: '/checkout',
             search: '?' + queryString
-        });
-    };
-
-    writeUserOrder = (order) => {
-        fire.database().ref('orders').push(order).then(() => {
-            setTimeout(() => {
-                this.setState({loading: false, purchasing: false});
-            }, 1500);
-            console.log('Loading:', this.state.loading);
-        }).catch(error => {
-            setTimeout(() => {
-                this.setState({loading: false, purchasing: false});
-            }, 1500);
-            console.log(error.code, error.message);
-            this.setState({error: error});
         });
     };
 
