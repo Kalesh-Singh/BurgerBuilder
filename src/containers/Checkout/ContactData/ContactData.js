@@ -46,13 +46,13 @@ class ContactData extends Component {
             setTimeout(() => {
                 this.setState({loading: false, purchasing: false});
                 this.props.history.push('/');
-            }, 1500);
+            }, 1000);
             console.log('Loading:', this.state.loading);
         }).catch(error => {
             setTimeout(() => {
                 this.setState({loading: false, purchasing: false});
                 this.props.history.push('/');
-            }, 1500);
+            }, 1000);
             console.log(error.code, error.message);
             this.setState({error: error});
         });

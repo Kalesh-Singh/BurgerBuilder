@@ -107,7 +107,7 @@ class BurgerBuilder extends Component {
                 console.log(snapshot.val());
                 setTimeout(() => {
                     this.setState({ingredients: snapshot.val()});
-                }, 1500);
+                }, 1000);
             }).catch(error => {
             console.log(error.code, error.message);
             this.setState({error: error});
