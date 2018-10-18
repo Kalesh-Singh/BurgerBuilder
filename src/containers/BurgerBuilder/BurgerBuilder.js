@@ -16,22 +16,19 @@ const INGREDIENT_PRICES = {
 
 class BurgerBuilder extends Component {
 
-    constructor(props) {
-        super(props);
+    state = {
+        ingredients: null,
+        totalPrice: 4,
+        purchasable: false,
+        purchasing: false,
+        loading: false,
+        error: null
+    };
 
-        this.state = {
-            ingredients: null,
-            totalPrice: 4,
-            purchasable: false,
-            purchasing: false,
-            loading: false,
-            error: null
-        };
-
-    }
 
     // A good hook for fetching data
     componentDidMount() {
+        console.log(this.props);
         this.readIngredients();
     }
 
@@ -90,7 +87,7 @@ class BurgerBuilder extends Component {
     };
 
     purchaseContinueHandler = () => {
-        this.setState({loading: true});
+        /*this.setState({loading: true});
 
         const order = {
             ingredients: this.state.ingredients,
@@ -107,7 +104,19 @@ class BurgerBuilder extends Component {
             deliveryMethod: 'fastest'
         };
 
-        this.writeUserOrder(order);
+        this.writeUserOrder(order);*/
+
+        const queryParams = [];
+        for (let i in this.state.ingredients) {
+            queryParams.push(encodeURIComponent(i)
+                + '='
+                + encodeURIComponent(this.state.ingredients[i]));
+        }
+        const queryString = queryParams.join('&');
+        this.props.history.push({
+            pathname: '/checkout',
+            search: '?' + queryString
+        });
     };
 
     writeUserOrder = (order) => {
