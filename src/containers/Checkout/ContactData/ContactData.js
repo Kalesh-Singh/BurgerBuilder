@@ -15,7 +15,7 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Your name'
                 },
-                value: 'Kalesh'
+                value: ''
             },
             street: {
                 elementType: 'input',
@@ -47,7 +47,7 @@ class ContactData extends Component {
                     type: 'email',
                     placeholder: 'Your email'
                 },
-                value: 'Kalesh'
+                value: ''
             },
             deliveryMethod: {
                 elementType: 'select',
@@ -57,7 +57,7 @@ class ContactData extends Component {
                         {value: 'cheapest', displayValue: 'Cheapest'},
                     ]
                 },
-                value: 'Kalesh'
+                value: ''
             },
         },
         loading: false
@@ -96,6 +96,16 @@ class ContactData extends Component {
         });
     };
 
+    inputChangedHandler = (event, inputIdentifier) => {
+        const updatedOrderForm = {...this.state.orderForm};
+        const updatedFormElement = {...updatedOrderForm[inputIdentifier]};
+        updatedFormElement.value = event.target.value;
+
+        updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+        this.setState({orderForm: updatedOrderForm});
+    };
+
     render() {
 
         const formElementsArray = [];
@@ -115,6 +125,7 @@ class ContactData extends Component {
                         elementType={formElement.config.elementType}
                         elementConfig={formElement.config.elementConfig}
                         value={formElement.config.value}
+                        changed={(event) => this.inputChangedHandler(event, formElement.id)}
                     />
                 ))}
                 <Button
